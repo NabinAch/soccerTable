@@ -1,5 +1,7 @@
 package com.football.epl.service;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,5 +16,9 @@ public class GameService {
 	
 	public Game addResult(Game game) {
 		return gameRepository.save(game);
+	}
+	
+	public ArrayList<Game> getAllResults(){
+		return (ArrayList<Game>) gameRepository.findAll();
 	}
 }
