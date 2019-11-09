@@ -89,6 +89,13 @@ public class TableService {
 				int newLoss = homeTable.getLoss() + 1;
 				homeTable.setLoss(newLoss);
 			}
+			if(winner.equals("draw")) 
+			{
+				int newHomeDraw = homeTable.getDraw() + 1;
+				int newPoint = homeTable.getPoint() + 1;
+				homeTable.setDraw(newHomeDraw);
+				homeTable.setPoint(newPoint);
+			}
 			table.add(homeInTable, homeTable);
 		}
 		if(teamToAdd.equals("away")) 
