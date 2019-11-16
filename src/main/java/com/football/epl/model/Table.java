@@ -66,6 +66,12 @@ public class Table {
 	public void setGoalDifference(int goalDifference) {
 		this.goalDifference = goalDifference;
 	}
+	@Override
+	public String toString() {
+		return "Table [team=" + team + ", gamePlayed=" + gamePlayed + ", win=" + win + ", draw=" + draw + ", loss="
+				+ loss + ", point=" + point + ", goalFor=" + goalFor + ", goalAgainst=" + goalAgainst
+				+ ", goalDifference=" + goalDifference + "]";
+	}
 	
 	
 }

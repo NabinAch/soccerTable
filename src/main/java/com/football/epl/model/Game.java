@@ -46,5 +46,10 @@ public class Game {
 	public void setAwayScore(int awayScore) {
 		this.awayScore = awayScore;
 	}
+	@Override
+	public String toString() {
+		return "Game [id=" + id + ", home=" + home + ", away=" + away + ", homeScore=" + homeScore + ", awayScore="
+				+ awayScore + "]";
+	}
 	
 }

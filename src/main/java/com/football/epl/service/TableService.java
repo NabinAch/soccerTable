@@ -18,9 +18,19 @@ public class TableService {
 		
 		ArrayList<Game> results = gameService.getAllResults();
 		
+		System.out.println(results);
 		
+		if(results == null) return new ArrayList<Table>();
 		
-		return null;
+		ArrayList<Table> table = new ArrayList<>();
+		
+		for(Game game : results) {
+			System.out.println(game);
+			String winner = findWinner(game);
+			table = calculateTable(table, game, winner);
+		}
+
+		return table;
 	}
 	
 	public String findWinner(Game game) {
@@ -37,15 +47,11 @@ public class TableService {
 	}
 
 	public ArrayList<Table> calculateTable(ArrayList<Table> table, Game game, String winner){
-		if(winner.equals("home")) {
-			
-		}
-		if(winner.equals("away")) {
-			
-		}
-		if(winner.equals("draw")){
-			
-		}
+		
+		System.out.println(table);
+		addInTable(table, game, winner, "home");
+		addInTable(table, game, winner, "away");
+		return table;
 	}
 	
 	public boolean alreadyInTable(ArrayList<Table> table, String team) {
@@ -62,7 +68,10 @@ public class TableService {
 		int homeInTable = findInTable(table, game.getHome());
 		int awayInTable = findInTable(table, game.getAway());
 		
-		if(teamToAdd.equals("home")) 
+		System.out.println(homeInTable);
+		System.out.println(awayInTable);
+		
+		if(teamToAdd.equals("home") && homeInTable != -1) 
 		{
 			Table homeTable = table.get(homeInTable);
 			
@@ -98,7 +107,8 @@ public class TableService {
 			}
 			table.add(homeInTable, homeTable);
 		}
-		if(teamToAdd.equals("away")) 
+		
+		if(teamToAdd.equals("away") && awayInTable != -1) 
 		{
 			Table awayTable = table.get(awayInTable);
 			
@@ -134,11 +144,49 @@ public class TableService {
 			}
 			table.add(homeInTable, awayTable);
 		}
+		
+		if(teamToAdd.equals("away") && awayInTable == -1) {
+			Table newTable = new Table();
+			newTable.setGamePlayed(1);
+			newTable.setTeam(game.getAway());
+			newTable.setGoalFor(game.getAwayScore());
+			newTable.setGoalAgainst(game.getHomeScore());
+			newTable.setGoalDifference(game.getAwayScore()-game.getHomeScore());
+			if(winner.equals("away")) {
+				newTable.setPoint(3);
+				newTable.setWin(1);
+			}
+			if(winner.equals("draw")) {
+				newTable.setPoint(1);
+				newTable.setDraw(1);
+			}
+			if(winner.equals("home")) {
+				newTable.setLoss(1);
+			}
+			table.add(newTable);
 		}
-		if(teamToAdd.equals("draw"))
-		{
-			
+		
+		if(teamToAdd.equals("home") && homeInTable == -1) {
+			Table newTable = new Table();
+			newTable.setGamePlayed(1);
+			newTable.setTeam(game.getHome());
+			newTable.setGoalFor(game.getHomeScore());
+			newTable.setGoalAgainst(game.getAwayScore());
+			newTable.setGoalDifference(game.getHomeScore()-game.getAwayScore());
+			if(winner.equals("home")) {
+				newTable.setPoint(3);
+				newTable.setWin(1);
+			}
+			if(winner.equals("draw")) {
+				newTable.setPoint(1);
+				newTable.setDraw(1);
+			}
+			if(winner.equals("loss")) {
+				newTable.setLoss(1);
+			}
+			table.add(newTable);
 		}
+		return true;
 	}
 
 	private int findInTable(ArrayList<Table> table, String team) {
@@ -153,7 +201,4 @@ public class TableService {
 		}
 		return position;
 	}
-	
-
-	
 }
