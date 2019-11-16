@@ -29,7 +29,7 @@ public class TableService {
 			String winner = findWinner(game);
 			table = calculateTable(table, game, winner);
 		}
-
+		System.out.println(table);
 		return table;
 	}
 	
@@ -70,6 +70,7 @@ public class TableService {
 		
 		System.out.println(homeInTable);
 		System.out.println(awayInTable);
+		System.out.println(table);
 		
 		if(teamToAdd.equals("home") && homeInTable != -1) 
 		{
@@ -105,7 +106,8 @@ public class TableService {
 				homeTable.setDraw(newHomeDraw);
 				homeTable.setPoint(newPoint);
 			}
-			table.add(homeInTable, homeTable);
+			table.set(homeInTable, homeTable);
+			System.out.println(table);
 		}
 		
 		if(teamToAdd.equals("away") && awayInTable != -1) 
@@ -142,7 +144,7 @@ public class TableService {
 				awayTable.setDraw(newHomeDraw);
 				awayTable.setPoint(newPoint);
 			}
-			table.add(homeInTable, awayTable);
+			table.set(awayInTable, awayTable);
 		}
 		
 		if(teamToAdd.equals("away") && awayInTable == -1) {
