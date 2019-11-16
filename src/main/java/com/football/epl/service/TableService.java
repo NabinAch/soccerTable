@@ -100,7 +100,40 @@ public class TableService {
 		}
 		if(teamToAdd.equals("away")) 
 		{
+			Table awayTable = table.get(awayInTable);
 			
+			int newGamePlayed = awayTable.getGamePlayed() + 1;
+			int newGoalFor = awayTable.getGoalFor() + game.getHomeScore();
+			int newGoalAgainst = awayTable.getGoalAgainst() + game.getAwayScore();
+			int newGoalDifference = newGoalFor - newGoalAgainst;
+			
+			awayTable.setGamePlayed(newGamePlayed);
+			awayTable.setGoalFor(newGoalFor);
+			awayTable.setGoalAgainst(newGoalAgainst);
+			awayTable.setGoalDifference(newGoalDifference);
+			
+			if(winner.equals("away"))
+			{
+				int newPoint = awayTable.getPoint() + 3;	
+				int newWin = awayTable.getWin() + 1;
+
+				awayTable.setPoint(newPoint);
+				awayTable.setWin(newWin);
+			}
+			if(winner.equals("home"))
+			{
+				int newLoss = awayTable.getLoss() + 1;
+				awayTable.setLoss(newLoss);
+			}
+			if(winner.equals("draw")) 
+			{
+				int newHomeDraw = awayTable.getDraw() + 1;
+				int newPoint = awayTable.getPoint() + 1;
+				awayTable.setDraw(newHomeDraw);
+				awayTable.setPoint(newPoint);
+			}
+			table.add(homeInTable, awayTable);
+		}
 		}
 		if(teamToAdd.equals("draw"))
 		{
